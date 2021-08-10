@@ -1,20 +1,4 @@
-/*
- * Copyright (C) 2019 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
- 
-package com.example.android.eggtimernotifications.ui
+package com.example.android.timernotifications.ui
 
 import android.app.*
 import android.content.Context
@@ -24,12 +8,12 @@ import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
-import com.example.android.eggtimernotifications.receiver.AlarmReceiver
-import com.example.android.eggtimernotifications.R
-import com.example.android.eggtimernotifications.util.cancelNotifications
+import com.example.android.timernotifications.receiver.AlarmReceiver
+import com.example.android.timernotifications.R
+import com.example.android.timernotifications.util.cancelNotifications
 import kotlinx.coroutines.*
 
-class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
+class TimerViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val REQUEST_CODE = 0
     private val TRIGGER_TIME = "TRIGGER_AT"
@@ -42,7 +26,7 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private var prefs =
-        app.getSharedPreferences("com.example.android.eggtimernotifications", Context.MODE_PRIVATE)
+        app.getSharedPreferences("com.example.android.timernotifications", Context.MODE_PRIVATE)
     private val notifyIntent = Intent(app, AlarmReceiver::class.java)
 
     private val _timeSelection = MutableLiveData<Int>()
@@ -56,7 +40,6 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
     private var _alarmOn = MutableLiveData<Boolean>()
     val isAlarmOn: LiveData<Boolean>
         get() = _alarmOn
-
 
     private lateinit var timer: CountDownTimer
 
@@ -81,14 +64,8 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
         if (_alarmOn.value!!) {
             createTimer()
         }
-
     }
 
-    /**
-     * Turns on or off the alarm
-     *
-     * @param isChecked, alarm status to be set.
-     */
     fun setAlarm(isChecked: Boolean) {
         when (isChecked) {
             true -> timeSelection.value?.let { startTimer(it) }
@@ -96,18 +73,10 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    /**
-     * Sets the desired interval for the alarm
-     *
-     * @param timerLengthSelection, interval timerLengthSelection value.
-     */
     fun setTimeSelected(timerLengthSelection: Int) {
         _timeSelection.value = timerLengthSelection
     }
 
-    /**
-     * Creates a new alarm, notification and timer
-     */
     private fun startTimer(timerLengthSelection: Int) {
         _alarmOn.value?.let {
             if (!it) {
@@ -115,25 +84,21 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
                 _alarmOn.value = true
                 val selectedInterval = when (timerLengthSelection) {
                     0 -> second * 10 //For testing only
-                    else ->timerLengthOptions[timerLengthSelection] * minute
+                    else -> timerLengthOptions[timerLengthSelection] * minute
                 }
                 val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
-
-                // TODO: Step 1.15 call cancel notification
                 val notificationManager =
                     ContextCompat.getSystemService(
                         app,
                         NotificationManager::class.java
                     ) as NotificationManager
                 notificationManager.cancelNotifications()
-
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     alarmManager,
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime,
                     notifyPendingIntent
                 )
-
                 viewModelScope.launch {
                     saveTime(triggerTime)
                 }
@@ -142,9 +107,6 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
         createTimer()
     }
 
-    /**
-     * Creates a new timer
-     */
     private fun createTimer() {
         viewModelScope.launch {
             val triggerTime = loadTime()
@@ -164,17 +126,11 @@ class EggTimerViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    /**
-     * Cancels the alarm, notification and resets the timer
-     */
     private fun cancelNotification() {
         resetTimer()
         alarmManager.cancel(notifyPendingIntent)
     }
 
-    /**
-     * Resets the timer on screen and sets alarm value false
-     */
     private fun resetTimer() {
         timer.cancel()
         _elapsedTime.value = 0

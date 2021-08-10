@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1087029937749",
+    "project_id": "notifications-1eb48",
+    "storage_bucket": "notifications-1eb48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087029937749:android:894b4301d7ac7536b6f6dc",
+        "android_client_info": {
+          "package_name": "com.example.android.eggtimernotifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087029937749-2129jvinbvbia6efbj6m8cbb1foeh976.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcdVb95e69RFNdqZsYBUaYMuu52fw92Os"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087029937749-2129jvinbvbia6efbj6m8cbb1foeh976.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087029937749:android:ec476853259729c6b6f6dc",
+        "android_client_info": {
+          "package_name": "com.example.android.timernotifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087029937749-2129jvinbvbia6efbj6m8cbb1foeh976.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcdVb95e69RFNdqZsYBUaYMuu52fw92Os"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087029937749-2129jvinbvbia6efbj6m8cbb1foeh976.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.eggtimernotifications.receiver
+package com.example.android.timernotifications.receiver
 
 import android.app.AlarmManager
 import android.app.NotificationManager
@@ -27,17 +27,16 @@ import android.text.format.DateUtils
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 
-class SnoozeReceiver: BroadcastReceiver() {
+class SnoozeReceiver : BroadcastReceiver() {
     private val REQUEST_CODE = 0
 
     override fun onReceive(context: Context, intent: Intent) {
         val triggerTime = SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS
 
-        val notifyIntent = Intent(context, AlarmReceiver::class.java)
         val notifyPendingIntent = PendingIntent.getBroadcast(
             context,
             REQUEST_CODE,
-            notifyIntent,
+            Intent(context, AlarmReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -47,12 +46,10 @@ class SnoozeReceiver: BroadcastReceiver() {
             triggerTime,
             notifyPendingIntent
         )
-
         val notificationManager = ContextCompat.getSystemService(
             context,
             NotificationManager::class.java
         ) as NotificationManager
         notificationManager.cancelAll()
     }
-
 }
