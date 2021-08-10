@@ -46,7 +46,7 @@
 
         <!-- TODO: Step 3.0 uncomment to start the service  -->
         <service
-                android:name="com.example.android.timernotifications.MyFirebaseMessagingService"
+                android:name="com.example.android.timernotifications.FirebaseMsgService"
                 android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

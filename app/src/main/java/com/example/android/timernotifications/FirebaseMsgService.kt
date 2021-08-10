@@ -7,7 +7,7 @@ import com.example.android.timernotifications.util.sendNotification
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class FirebaseMsgService : FirebaseMessagingService() {
 
     /**
      * Called when message is received.
